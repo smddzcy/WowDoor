@@ -63,6 +63,38 @@ class IotController
     }
 
     /**
+     * Unpairs the device
+     *
+     * @param string $id ID of the device
+     * @return boolean True or false
+     * @throws RestException DB couldn't be reached
+     * @url GET unpair-device/{id}
+     */
+    public static function unpairDevice($id)
+    {
+        $db = DB::getInstance();
+        $query = $db->prepare("SELECT * FROM devices WHERE device_id = :id");
+        if ($query->execute([
+                ":id" => $id
+            ]) === false
+        ) {
+            throw new RestException(412, "DB connection error.");
+        }
+        $query->fetch();
+        if ($query->rowCount() > 0) {
+            $query = $db->prepare("UPDATE devices SET paired = 0 WHERE device_id = :id");
+            if ($query->execute([
+                    ":id" => $id
+                ]) === false
+            ) {
+                throw new RestException(412, "DB connection error.");
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Sends a door open request
      *
      * @param string $id ID of the device
