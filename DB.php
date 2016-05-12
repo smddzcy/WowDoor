@@ -18,7 +18,7 @@ class DB
     public static function getInstance()
     {
         if (static::$db === null) {
-            static::$db = new PDO("sqlsrv:server=wowdoor.database.windows.net,1433;atabase = wowdoor", "wowdoor", "wow!1233211");
+            static::$db = new PDO(Config::DB_TYPE . ':host=' . Config::DB_HOST . ';port=' . Config::DB_PORT . ';dbname=' . Config::DB_NAME . ';charset=' . Config::DB_CHARSET, Config::DB_USER, Config::DB_PASS);
             static::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             static::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         }
