@@ -21,7 +21,7 @@ class IotController
         $db = DB::getInstance();
         $query = $db->prepare("SELECT * FROM devices WHERE device_id = :id AND paired = 1");
         if ($query->execute([
-                ":id" => $id
+                ":id" => md5($id)
             ]) === false
         ) {
             throw new RestException(412, "DB connection error.");
@@ -43,7 +43,7 @@ class IotController
         $db = DB::getInstance();
         $query = $db->prepare("SELECT * FROM devices WHERE device_id = :id");
         if ($query->execute([
-                ":id" => $id
+                ":id" => md5($id)
             ]) === false
         ) {
             throw new RestException(412, "DB connection error.");
@@ -52,7 +52,7 @@ class IotController
         if ($query->rowCount() > 0) {
             $query = $db->prepare("UPDATE devices SET paired = 1 WHERE device_id = :id");
             if ($query->execute([
-                    ":id" => $id
+                    ":id" => md5($id)
                 ]) === false
             ) {
                 throw new RestException(412, "DB connection error.");
@@ -75,7 +75,7 @@ class IotController
         $db = DB::getInstance();
         $query = $db->prepare("SELECT * FROM devices WHERE device_id = :id");
         if ($query->execute([
-                ":id" => $id
+                ":id" => md5($id)
             ]) === false
         ) {
             throw new RestException(412, "DB connection error.");
@@ -84,7 +84,7 @@ class IotController
         if ($query->rowCount() > 0) {
             $query = $db->prepare("UPDATE devices SET paired = 0 WHERE device_id = :id");
             if ($query->execute([
-                    ":id" => $id
+                    ":id" => md5($id)
                 ]) === false
             ) {
                 throw new RestException(412, "DB connection error.");
@@ -100,7 +100,7 @@ class IotController
      * @param string $id ID of the device
      * @throws RestException DB couldn't be reached
      * @return bool True on success, false otherwise
-     * @url GET request-door-open/{id}
+     * @url GET request-door-open/{id}/{key}
      */
     public static function doorOpenRequest($id)
     {
@@ -108,7 +108,7 @@ class IotController
         $db = DB::getInstance();
         $query = $db->prepare("SELECT * FROM requests WHERE device_id = :id");
         if ($query->execute([
-                ":id" => $id
+                ":id" => md5($id)
             ]) === false
         ) {
             throw new RestException(412, "DB connection error.");
@@ -117,7 +117,7 @@ class IotController
         if ($query->rowCount() == 0) {
             $query = $db->prepare("INSERT INTO requests (device_id) VALUES (:id)");
             if ($query->execute([
-                    ":id" => $id
+                    ":id" => md5($id)
                 ]) === false
             ) {
                 throw new RestException(412, "DB connection error.");
@@ -140,7 +140,7 @@ class IotController
         $db = DB::getInstance();
         $query = $db->prepare("SELECT * FROM requests WHERE device_id = :id");
         if ($query->execute([
-                ":id" => $id
+                ":id" => md5($id)
             ]) === false
         ) {
             throw new RestException(412, "DB connection error.");
@@ -149,7 +149,7 @@ class IotController
         if ($query->rowCount() == 0) return false;
         $query = $db->prepare("DELETE FROM requests WHERE device_id = :id");
         if ($query->execute([
-                ":id" => $id
+                ":id" => md5($id)
             ]) === false
         ) {
             throw new RestException(412, "DB connection error.");
