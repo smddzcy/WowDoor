@@ -7,11 +7,5 @@
       <schema-pattern>iothackathon.*</schema-pattern>
       <default-schemas>iothackathon.*</default-schemas>
     </data-source>
-    <data-source name="SQL Server (Microsoft) - wowdoor@wowdoor.database.windows.net" uuid="4c78a47e-1092-4123-9c6a-605569b74439">
-      <secret-storage>master_key</secret-storage>
-      <user-name>wowdoor</user-name>
-      <schema-pattern>wowdoor.*</schema-pattern>
-      <default-schemas>wowdoor.*</default-schemas>
-    </data-source>
   </component>
 </project>
