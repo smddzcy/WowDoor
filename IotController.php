@@ -99,6 +99,7 @@ class IotController
      *
      * @param string $id ID of the device
      * @throws RestException DB couldn't be reached
+     * @return bool True on success, false otherwise
      * @url GET request-door-open/{id}
      */
     public static function doorOpenRequest($id)
@@ -121,7 +122,9 @@ class IotController
             ) {
                 throw new RestException(412, "DB connection error.");
             }
+            return true;
         }
+        return false;
     }
 
     /**
